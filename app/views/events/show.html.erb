@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h3>Event #<%= @event.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Event name</dt>
+      <dd><%= @event.event_name %></dd>
+
+      <dt>Event location</dt>
+      <dd><%= @event.event_location %></dd>
+
+      <dt>Date</dt>
+      <dd><%= @event.date %></dd>
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/events" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/events/<%= @event.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_event/<%= @event.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

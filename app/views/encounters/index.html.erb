@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>
+    Encounters
+    <a href="/encounters/new" class="btn btn-lg btn-success">New Encounter</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Person</th>
+        <th>Event</th>
+        <th>Date</th>
+        <th>Thankyouletter sent</th>
+        <th>Actions</th>
+      </tr>
+      <% @encounters.each do |encounter| %>
+      <tr><%next if encounter.user_id != current_user.id %>
+        <td><%= encounter.person.full_name %></td>
+        <td><%= encounter.event.event_name %></td>
+        <td><%= encounter.event.date %></td>
+        <% if encounter.thankyouletter_sent == true %>
+        <td>Yes</td>
+        <% else %>
+        <td><font color="red"><a href="mailto:?subject=Thank%20you,%20<%=encounter.person.first_name %>">E-mail!</font></td>
+        <% end %>
+        <td>
+          <a href="/encounters/<%= encounter.id %>" class="btn btn-primary">Show</a>
+          <a href="/encounters/<%= encounter.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_encounter/<%= encounter.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

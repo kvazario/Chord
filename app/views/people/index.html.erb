@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h1>
+    People
+    <a href="/people/new" class="btn btn-lg btn-success">New Person</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Talking points</th>
+        <th>Times met</th>
+        <th>Title</th>
+        <th>Boothie</th>
+        <th>Office location</th>
+        <th>Company</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @people.each do |person| %>
+      <tr>
+        <td><%= person.first_name %></td>
+        <td><%= person.last_name %></td>
+        <td><%= person.talking_points %></td>
+        <td><%= person.encounters.where(:user_id => current_user.id).count %></td>
+        <td><%= person.title %></td>
+        <td><%= person.boothie %></td>
+        <td><%= person.office_location %></td>
+        <td><%= person.company.company_name %></td>
+        <td>
+          <a href="/people/<%= person.id %>" class="btn btn-primary">Show</a>
+          <a href="/people/<%= person.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_person/<%= person.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

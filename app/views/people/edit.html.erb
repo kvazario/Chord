@@ -1,0 +1,90 @@
+<!-- Validation failure messages -->
+<% if @person.errors.any? %>
+  <% @person.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Person #<%= @person.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_person/<%= @person.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for first_name -->
+      <div class="form-group">
+        <label for="first_name" class="control-label">
+          First name
+        </label>
+
+        <input type="text" id="first_name" name="first_name" placeholder="First name" class="form-control" value="<%= @person.first_name %>">
+      </div>
+
+      <!-- Label and input for last_name -->
+      <div class="form-group">
+        <label for="last_name" class="control-label">
+          Last name
+        </label>
+
+        <input type="text" id="last_name" name="last_name" placeholder="Last name" class="form-control" value="<%= @person.last_name %>">
+      </div>
+
+      <!-- Label and input for talking_points -->
+      <div class="form-group">
+        <label for="talking_points" class="control-label">
+          Talking points
+        </label>
+
+        <input type="text" id="talking_points" name="talking_points" placeholder="Talking points" class="form-control" value="<%= @person.talking_points %>">
+      </div>
+
+      <!-- Label and input for title -->
+      <div class="form-group">
+        <label for="title" class="control-label">
+          Title
+        </label>
+
+        <input type="text" id="title" name="title" placeholder="Title" class="form-control" value="<%= @person.title %>">
+      </div>
+
+      <!-- Label and input for boothie -->
+      <div class="checkbox">
+        <label for="boothie">
+          <input type="checkbox" id="boothie" name="boothie" value="1" <%= "checked" if @person.boothie %>>
+          Boothie
+        </label>
+      </div>
+
+      <!-- Label and input for office_location -->
+      <div class="form-group">
+        <label for="office_location" class="control-label">
+          Office location
+        </label>
+
+        <input type="text" id="office_location" name="office_location" placeholder="Office location" class="form-control" value="<%= @person.office_location %>">
+      </div>
+
+      <!-- Label and input for company_id -->
+      <div class="form-group">
+        <label for="company_id" class="control-label">
+          Company
+        </label>
+        <%= select_tag(:company_id, options_from_collection_for_select(Company.all, :id, :company_name), :class => "form-control") %>
+        <a href="/company/new">or add a new company</a>
+      </div>
+
+      <button class="btn btn-warning">
+        Update Person
+      </button>
+      or
+      <a href="/people/<%= @person.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

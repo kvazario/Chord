@@ -1,0 +1,60 @@
+<!-- Validation failure messages -->
+<% if @encounter.errors.any? %>
+  <% @encounter.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Encounter</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_encounter" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for person_id -->
+      <div class="form-group">
+        <label for="person_id" class="control-label">
+          Person
+        </label>
+        <%= select_tag(:person_id, options_from_collection_for_select(Person.all, :id, :full_name), :class => "form-control") %>
+        <a href="/people/new">or add a new person</a>
+      </div>
+
+      <!-- Label and input for event_id -->
+      <div class="form-group">
+        <label for="event_id" class="control-label">
+          Event
+        </label>
+        <%= select_tag(:event_id, options_from_collection_for_select(Event.all, :id, :display_name), :class => "form-control") %>
+        <a href="/events/new">or add a new event</a>
+      </div>
+
+      <!-- Label and input for thankyouletter_sent -->
+      <div class="checkbox">
+        <label for="thankyouletter_sent">
+          <input type="checkbox" id="thankyouletter_sent" name="thankyouletter_sent" value="1" <%= "checked" if @encounter.thankyouletter_sent %>>
+          Thankyouletter sent
+        </label>
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+
+        <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Encounter
+      </button>
+      or
+      <a href="/encounters">Cancel</a>
+    </form>
+  </div>
+</div>

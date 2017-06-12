@@ -1,0 +1,76 @@
+<div class="page-header">
+  <h3><%= @person.first_name %> <%= @person.last_name %>, <%= @person.company.company_name %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+
+      <dt>Talking points</dt>
+      <dd><%= @person.talking_points %></dd>
+
+      <dt>Title</dt>
+      <dd><%= @person.title %></dd>
+
+      <dt>Boothie</dt>
+      <% if @person.boothie = 1 %>
+      <dd>Yes</dd>
+      <% else %>
+      <dd>No</dd>
+      <% end %>
+
+      <dt>Office city</dt>
+      <dd><%= @person.office_location %></dd>
+
+      <dt>Times met</dt>
+      <dd><%= @person.encounters.where(:user_id => current_user.id).count %></dd>
+      <dd><br />
+      <h4>Should be more?</h4>
+
+      <form action="/create_encounter" method="post">
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+          <input name="person_id" type="hidden" value= <%= @person.id %> >
+
+          <!-- Label and input for title -->
+          <div class="form-group">
+              <label for="event_id" class="control-label">
+                Event
+              </label>
+              <%= select_tag(:event_id, options_from_collection_for_select(Event.all, :id, :display_name), :class => "form-control") %>
+              <a href="/events/new">or add a new event</a>
+            </div>
+
+            <!-- Label and input for thankyouletter_sent -->
+            <div class="checkbox">
+              <label for="thankyouletter_sent">
+                <input type="checkbox" id="thankyouletter_sent" name="thankyouletter_sent" value="1" <%= "checked" if @encounter.thankyouletter_sent %>>
+                Thankyouletter sent
+              </label>
+            </div>
+            <!-- Label and input for user_id -->
+            <div class="form-group">
+
+              <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+            </div>
+
+
+            <button class="btn btn-success">
+            Create an Encounter!
+          </button>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/people" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/people/<%= @person.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_person/<%= @person.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

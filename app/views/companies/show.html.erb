@@ -1,0 +1,58 @@
+<div class="page-header">
+  <h3>Company #<%= @company.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Company name</dt>
+      <dd><%= @company.company_name %></dd>
+
+      <dt>Local address</dt>
+      <dd><%= @company.local_address %></dd>
+
+      <dt>Map</dt>
+      <dd>
+        <!-- Code for Google Map -->
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+      <script>
+        var map;
+        function initialize() {
+
+          var myLatlng = new google.maps.LatLng(<%= @lat %>, <%= @long %>);
+
+          var mapOptions = {
+            zoom: 15,
+            center: myLatlng
+          };
+
+          map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+
+          var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: "<%= @company.company_name %>"
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+      </script>
+      <div id="map-canvas"></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/companies" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/companies/<%= @company.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_company/<%= @company.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
